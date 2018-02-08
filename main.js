@@ -34,8 +34,8 @@ function clicked_block (ev, block) {
 
 function move_block (ev) {
     if (moving == true) {
-        console.log("Moved to: (" + ev.screenX + ", " + ev.screenY + ")");
-        block_to_move.style.setProperty('transform', 'translate(' + (ev.pageX - 34) + 'px, ' + (ev.pageY - (3 * 64)) + 'px)')
+        block_to_move.style.setProperty('transform', 
+            'translate(' + (ev.pageX - viewer.offsetLeft - 64) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)')
 
         moving = false;
 
@@ -80,10 +80,10 @@ function clicked_output (ev, output_block) {
 
     connect_line = true;
 
-    global_line_y = ev.clientY;
-    global_line_x = ev.clientX;
+    global_line_y = ev.pageY - viewer.offsetTop - 32;
+    global_line_x = ev.pageX - viewer.offsetLeft - 32;
 
-    create_line(global_line_x, global_line_y, 0, 0);
+    create_line(global_line_x, global_line_y, global_line_x, global_line_y);
 
     ev.stopPropagation();
 }
@@ -91,7 +91,7 @@ function clicked_output (ev, output_block) {
 function create_line (x1, y1, x2, y2) {
     console.log("Creating connector line...");
 
-    let length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) - 10; // remove a small constant so as to not block the cursor
+    let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
     let angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
 
     let line = document.createElement('div');
@@ -851,7 +851,7 @@ viewer.onclick = move_block;
 viewer.onmousemove = (ev) => {
     if (connect_line) {
         viewer.removeChild(document.getElementById('tester'));
-        create_line(global_line_x, global_line_y, ev.clientX, ev.clientY);
+        create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft - 32, ev.pageY - viewer.offsetTop - 32);
     }
 }
 document.getElementById('action').innerHTML = current_action;
