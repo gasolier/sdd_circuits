@@ -881,9 +881,9 @@ create_input.onclick = () => {
     block_array.push(new input_block());
 }
 
-viewer.onclick = move_block;
+sandbox.onclick = move_block;
 
-viewer.onmousemove = (ev) => {
+sandbox.onmousemove = (ev) => {
     if (connect_line) {
         viewer.removeChild(document.getElementById('tester'));
         create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft - 32, ev.pageY - viewer.offsetTop - 32);
