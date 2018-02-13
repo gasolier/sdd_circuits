@@ -900,5 +900,5 @@ learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
 next_lesson.onclick = () => {
     next_stage();  
 }
-}
+
 document.getElementById('action').innerHTML = current_action;
