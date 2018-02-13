@@ -1,0 +1,62 @@
+.sandbox {
+	display: none;
+}
+
+.learn {
+	position: absolute;
+	left: 2.5%;
+	top: 5%;
+	height: 90%;
+    width: 95%;
+    border: 2px solid black;
+}
+
+.line {
+	transform-origin: 0% 100%;
+	height: 0.5px;
+	background: #000000;
+}
+
+.draggable {
+    cursor: move;
+}
+
+.trigger {
+    cursor: pointer;
+}
+
+.viewer {
+	position: absolute;
+	left: 10%;
+	top: 0%;
+    height: 100%;
+    width: 89.75%;
+    border: none;
+}
+
+div {
+	position: absolute;
+	left: 2.5%;
+	top: 5%;
+    height: 90%;
+    width: 95%;
+    border: 2px solid black;
+}
+
+ul {
+	height: 100%;
+	width: 10%;
+	margin-top: 0%;
+	margin-left: -3.25%;
+}
+
+li {
+	list-style-type: none;
+	height: 12.5%;
+	width: 100%;
+}
+
+button {
+	height: 100%;
+	width: 100%;
+}
