@@ -10,7 +10,7 @@ let current_action = "Nothing";
 let mode = "learn";
 let learn_frame = document.getElementById('learn');
 let current_lesson = 0;
-let sandbox_levels = [1,3];
+let sandbox_levels = [1,3,5];
 
 function next_stage () {
     current_lesson += 1;
