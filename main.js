@@ -11,6 +11,25 @@ let mode = "learn";
 let learn_frame = document.getElementById('learn');
 let current_lesson = 0;
 let sandbox_levels = [1,3,5];
+let all_line_elements = new Array();
+
+function create_line (x1, y1, x2, y2) {
+    let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
+    let angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+
+    let line = document.createElement('div');
+    line.classList.add('line');
+
+    line.style.setProperty('position', 'absolute');
+    line.style.setProperty('left', x1 + 'px');
+    line.style.setProperty('top', y1 + 'px');
+    line.style.setProperty('transform', 'rotate(' + angle + 'deg)');
+    line.style.setProperty('width', length + 'px');
+
+    line.id = 'tester';
+
+    viewer.appendChild(line);
+}
 
 function next_stage () {
     current_lesson += 1;
@@ -23,36 +42,6 @@ function next_stage () {
         learn.style.setProperty('display', 'inline');
         learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
     }
-}
-
-function clicked_switch (ev, block) {
-    if (block_to_move != null) {
-        move_block(ev);
-        return;
-    }
-    block = block_array[parseInt(block.parentElement.id)];
-    
-    block.output = block.output ? false : true;
-    block.update_self();
-
-    ev.stopPropagation();
-}
-
-
-function clicked_block (ev, block) {
-    if (block_to_move != null) {
-        move_block(ev);
-        return;
-    }
-    block.style.setProperty('stroke', 'red');
-    moving = true;
-    block_to_move = block;
-    viewer.style.setProperty('cursor', 'pointer');
-
-    current_action = "Moving element";
-    document.getElementById('action').innerHTML = current_action;
-
-    ev.stopPropagation();
 }
 
 function move_block (ev) {
@@ -70,8 +59,61 @@ function move_block (ev) {
         current_action = "Nothing";
         document.getElementById('action').innerHTML = current_action;
 
+        connect_line = false;
+
         ev.stopPropagation();
     }
+}
+
+function clicked_block (ev, block) {
+    if (block_to_move != null) {
+        move_block(ev);
+        return;
+    }
+    try {
+        // get all the lines that we have a connection to so that we can move them around
+        let connected_line_ids = block_array[parseInt(block.id)].connected_lines;
+
+        for (var block_id of connected_line_ids.keys()) {
+            let vals = connected_line_ids.get(block_id);
+
+            // set the global line values to the secondary positional information
+            global_line_y = vals.y2;
+            global_line_x = vals.x2;
+
+            // delete the old line
+            console.log((document.getElementByID(block.id + "|" + block_id) || document.getElementByID(block_id + "|" + block.id)));
+            viewer.removeChild(document.getElementByID(block.id + "|" + block_id) || document.getElementByID(block_id + "|" + block.id));
+            
+            // create the new line
+            connect_line = true;
+            create_line(global_line_x, global_line_y, vals.x1, vals.y1);
+        }
+    }
+    catch(err) { /* nothing here yet */ }
+    block.style.setProperty('stroke', 'red');
+    moving = true;
+    block_to_move = block;
+    viewer.style.setProperty('cursor', 'pointer');
+
+    current_action = "Moving element";
+    document.getElementById('action').innerHTML = current_action;
+
+    ev.stopPropagation();
+}
+
+function clicked_switch (ev, block) {
+    if (block_to_move != null) {
+        move_block(ev);
+        return;
+    }
+
+    block = block_array[parseInt(block.parentElement.id)];
+    
+    block.output = block.output ? false : true;
+    block.update_self();
+
+    ev.stopPropagation();
 }
 
 function clicked_input (ev, input_block) {
@@ -119,27 +161,6 @@ function clicked_output (ev, output_block) {
     ev.stopPropagation();
 }
 
-function create_line (x1, y1, x2, y2) {
-    console.log("Creating connector line...");
-
-    let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
-    let angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-
-    let line = document.createElement('div');
-    line.classList.add('line');
-
-    line.style.setProperty('position', 'absolute');
-    line.style.setProperty('left', x1 + 'px');
-    line.style.setProperty('top', y1 + 'px');
-    line.style.setProperty('transform', 'rotate(' + angle + 'deg)');
-    console.log(length);
-    line.style.setProperty('width', length + 'px');
-
-    line.id = 'tester';
-
-    viewer.appendChild(line);
-}
-
 function output_connector (ev, output_block) {
     if (block_to_move != null) {
         move_block(ev);
@@ -176,8 +197,23 @@ function output_connector (ev, output_block) {
             
         }
 
-        connect_line = false;
+        // this stuff is too much work, do after MVP
+        // handles the completion of the line by adding the information to each object and then changing the element's ID to one that can be
+        // retrieved and analysed using Regex. This is pretty self-explanatory but a little abstracted so I'm just reminding myself of it.
+        /*connect_line = false;
+        let line_element = document.getElementById('tester');
+        output_block.connected_lines.set(block_array.indexOf(connector_block).toString(), 
+            {'x2':global_line_x, 'y2':global_line_y, 'x1':ev.pageX - viewer.offsetLeft - 32, 'y1':ev.pageY - viewer.offsetTop - 32});
+        connector_block.connected_lines.set(block_array.indexOf(output_block).toString(), 
+            {'x1':global_line_x, 'y1':global_line_y, 'x2':ev.pageX - viewer.offsetLeft - 32, 'y2':ev.pageY - viewer.offsetTop - 32});
+        line_element.id = block_array.indexOf(connector_block).toString() + '|' + block_array.indexOf(output_block).toString();*/
+
+        // placeholder fix - make the blocks immovable
+        connector_block.svg_wrapper.setAttribute('onmousedown', '');
+        output_block.svg_wrapper.setAttribute('onmousedown', '');
+
         document.getElementById('tester').id = '';
+        connect_line = false;
         
         connector_block = null;
         output_connection = false;

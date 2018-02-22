@@ -5,10 +5,11 @@ table {
 
 th {
 	border: 2px solid black;
+	width: 80px;
 }
 
 td {
 	border: 1px solid black;
 	text-align: center;
-	width: 20px;
+	width: 80px;
 }

@@ -14,7 +14,7 @@
 
         <h2>Half-Adders</h2>
         <p>
-        	A half-adder is a basic circuit, constructed from simple logic gates, that accepts two inputs and adds them together. As you will understand this is relatively simple, however unlike many of the other circuits we have looked at the half-adder produces two outputs, a sum and a carry. Taking this and our knowledge of binary addition into account we can see that a half-adder would be best represented by the truth table below:
+        	An half-adder is a basic circuit, constructed from simple logic gates, that accepts two inputs and adds them together. As you will understand this is relatively simple, however unlike many of the other circuits we have looked at the half-adder produces two outputs, a sum and a carry. Taking this and our knowledge of binary addition into account we can see that an half-adder would be best represented by the truth table below:
         	<table>
         		<tr>
         			<th>A</th>
@@ -46,8 +46,302 @@
         			<td>1</td>
         			<td>0</td>
         		</tr>
-        	</table>
+        	</table><br>
+            Actually building this circuit is also relatively simple. We only need two logic gates as, as we can see from the truth table, the circuit returns a carry of 1 only if both inputs are true and returns a sum of 1 only if only one input is true. The gates that match these specifications are, of course, the XOR and the AND gates. Thus the design of an half-adder is:
+            <img src='Half-adder.svg' style='width: 50%'>
+        </p>
 
+        <h2>Full Adder</h2>
+        <p>
+            There is, however, a major issue with the half-adder. By itself it can only add two binary digits and this is unsuitable for constructing more circuits where multiple binary values are required to accurately represent integer or floating point values. If we wish to create a circuit that can add larger values than we need to extend the circuit in such a way that it is able to take into account the carry values from previous digit additions.
+            <br>
+            To do this we need to create a larger circuit from two half-adders, known as a full adder. The truth table for a full adder is:
+            <table>
+                <colgroup>
+                    <col span='5' style='width: 200px'>
+                </colgroup>
+                <tr>
+                    <th colspan='3'>Input</th>
+                    <th colspan='2'>Output</th>
+                </tr>
+                <tr>
+                    <td>Carry In</td>
+                    <td>A</td>
+                    <td>B</td>
+
+                    <td>Carry Out</td>
+                    <td>Sum</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+            </table>
+            <br>
+            As you can understand at this point the full adder becomes somewhat difficult to visualise but hopefully you can understand that it is simply adding three bits together. In practice constructing a full adder is just using two half-adders in succesion with another input for the carry in value. The full adder design also passes the carry output through an OR gate, resulting in a 1 if either half-adder has a carry of 1. Thus the design of a full adder is:
+            <br>
+            <img src='Full-adder.svg' style='width: 50%'>
+            <br>
+            Once you create a full adder adding larger binary digits becomes a simple matter of stringing the circuits together, with the carry out of each previous adder becoming the carry in of the next. Then the result of the addition is all of the sums and the final carry out. Thus the full adder is one of the most basic building blocks of a computer.
+        </p>
+
+        <h2>Flip-flops</h2>
+        <p>
+            Being able to add values is all well and good but unfortunately this is not worth much without the ability to store values in temporary and permanent memory. One method for storing data in temporary, or volatile, memory is the <i>flip-flop</i>. The flip-flop is a bistable circuit, which means that it is able to maintain one or two states at once. Due to this capability the flip-flop is the fundamental building block of volatile memory storage in a computer.
+            <br>
+            Most flip-flop designs break the circuit up into three separate components and we will examine each one of these components in some detail. These components are: the latch, the clock and the edge trigger.
+        </p>
+
+        <h3>The Latch</h3>
+        <p>
+            The first, and arguably most important, component is the latch. This is the part of the flip-flop that enables binary values to be stored and it achieves this through the use of <i>feedback</i>. Feedback refers to when output from further along the circuit is fed back into the circuit itself at an earlier point. You can likely see the value of this already, and it is this concept from which the latch is built. We will examine the RS-NAND latch which passes two inverted values - R and S, which stand for reset and set respectively - into two NAND gates, who's input is fed back into the other gate. This takes the form of:
+            <br>
+            <img src="latch.svg">
+            <br>
+            And from this we can tell that passing some values into the loop, say S is 1 and R is 0, will form a loop due to feedback and will result in Q and <span style='border-top: 1px solid black'>Q</span> maintaining their state until a change occurs. We can extend this to form an entire truth table that describes the function of the RS-NAND latch.
+            <table>
+                <tr>
+                    <th><span style='border-top: 1px solid black'>S</span></th>
+                    <th><span style='border-top: 1px solid black'>R</span></th>
+
+                    <th>Q</th>
+                    <th><span style='border-top: 1px solid black'>Q</span></th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Maintain State</td>
+                    <td>Maintain State</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>Illegal</td>
+                    <td>Illegal</td>
+                </tr>
+            </table>
+            <br>
+            The truth table, however, highlights a problem with the latch. If R and S are both equal to 1 then the operation is illegal and the latch will not work correctly. We will adress this after discussing the clock component.
+        </p>
+
+        <h3>The Clock</h3>
+        <p>
+            Another issue with the simple latch above is that the value stored within the latch can change whenever the inputs are changed. This can cause problems as we may not want the stored values to change whenever the inputs do, we may only want them to change once a second, or hour, or day. Thus to solve this we introduce the clock component. The clock component is merely an extra input that changes from positive to negative at specific intervals. By passing R and S through a NAND gate that is attached to the clock we can ensure that the value stored in the latch only changes when the clock is 0. Therefore changing the value of a latch multiple times is prohibited. Adding a clock component leads to the truth table becoming:
+            <br>
+            <table>
+                <colgroup>
+                    <col span='5' style='width: 200px'>
+                </colgroup>
+                <tr>
+                    <th colspan='3'>Input</th>
+                    <th colspan='2'>Output</th>
+                </tr>
+                <tr>
+                    <td>S</td>
+                    <td>R</td>
+                    <td>Clock</td>
+
+                    <td>Q</td>
+                    <td>notQ</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+
+                    <td>Illegal</td>
+                    <td>Illegal</td>
+                </tr>
+            </table>
+            <br>
+            As you can see, whenever the value of the clock is 0 the latch maintains its previous state and when the clock is 1 we are free to modify the value within the latch. Unfortunately we still have the issue of illegal inputs. This is actually an extremely simple and yet elegant fix. If you examine the above table the only time that we change the value stored inside the latch is when S and R are the inverse of each other. Thus we can rather simply fix the issue of illegal inputs by only accepting a single bit of input and making the other input its inverse using a NOT gate. This is known as a D-type latch and it has the truth table:
+            <br>
+            <table>
+                <colgroup>
+                    <col span='5' style='width: 200px'>
+                </colgroup>
+                <tr>
+                    <th colspan='3'>Input</th>
+                    <th colspan='2'>Output</th>
+                </tr>
+                <tr>
+                    <td>Clock</td>
+                    <td>D</td>
+                    <td>notD</td>
+
+                    <td>Q</td>
+                    <td>notQ</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    
+
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    
+
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    
+
+                    <td>Maintain state</td>
+                    <td>Maintain state</td>
+                </tr>
+            </table>
+            <br>
+            The D-type latch has the design: <br>
+            <img src="d-type.svg" style='width: 50%'>
         </p>
     </body>
 </html>
