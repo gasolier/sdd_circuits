@@ -189,8 +189,8 @@ function output_connector (ev, output_block) {
             
         }
 
-        connector_block.svg_wrapper.setAttribute('onmousedown', '');
-        output_block.svg_wrapper.setAttribute('onmousedown', '');
+        connector_block.svg_wrapper.onmousedown = function (event) { /* do nothing here */ }
+        output_block.svg_wrapper.onmousedown = function (event) { /* do nothing here */ }
 
         document.getElementById('tester').id = '';
         connect_line = false;
@@ -216,7 +216,8 @@ function input_block () {
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
     this.svg_wrapper.setAttribute('draggable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
+    this.svg_wrapper.onmouseup = function (event) { move_block(event, this); }
     this.svg_wrapper.style = "fill: grey; stroke: black; stroke-width: 2; position: absolute; fill-rule: nonzero;";
 
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -227,14 +228,14 @@ function input_block () {
 
     this.self_switch = document.createElementNS("http://www.w3.org/2000/svg", "path");
     this.self_switch.setAttribute('d', 'm37.9016,9.36019c-1.09164,-0.53457 -2.40645,-0.07557 -2.93852,1.03025c-0.52988,1.10582 -0.07256,2.43503 1.01908,2.97071c3.42443,1.68485 5.788,5.22903 5.7858,9.33668c-0.01099,5.72804 -4.59522,10.36248 -10.2601,10.37248c-5.66598,-0.01111 -10.2502,-4.64556 -10.2612,-10.37248c-0.0022,-4.10987 2.36247,-7.65739 5.7902,-9.3389c1.09384,-0.53568 1.54786,-1.86489 1.01908,-2.97071c-0.52988,-1.1036 -1.84249,-1.56593 -2.93633,-1.03025c-4.89424,2.39502 -8.2692,7.47179 -8.2714,13.33986c0.0022,8.18418 6.56193,14.81688 14.65964,14.8191c8.09661,-0.00222 14.65744,-6.63492 14.65854,-14.8191c-0.0022,-5.86585 -3.37276,-10.93929 -8.2648,-13.33764zm-6.39374,10.92928c1.21367,0 2.19757,-0.99357 2.19757,-2.22275l0,-10.37359c0,-1.22807 -0.98391,-2.22164 -2.19757,-2.22164c-1.21587,0 -2.19867,0.99468 -2.19867,2.22164l0,10.37248c0,1.22918 0.98281,2.22387 2.19867,2.22387z');
-    this.self_switch.setAttribute('onmousedown', 'clicked_switch(event, this)');
+    this.self_switch.onmousedown = function (event) { clicked_switch(event, this); }
     this.self_switch.classList.add('trigger');
 
     this.self_input_catch = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     this.self_input_catch.setAttribute('cx', '32');
     this.self_input_catch.setAttribute('cy', '23');
     this.self_input_catch.setAttribute('r', '12');
-    this.self_input_catch.setAttribute('onmousedown', 'clicked_switch(event, this)');
+    this.self_input_catch.onmousedown = function (event) { clicked_switch(event, this); }
     this.self_input_catch.classList.add('trigger');
     this.self_input_catch.style.setProperty('fill', 'white');
 
@@ -242,7 +243,7 @@ function input_block () {
     this.self_output.setAttribute('cx', '32');
     this.self_output.setAttribute('cy', '50');
     this.self_output.setAttribute('r', '8');
-    this.self_output.setAttribute('onmousedown', 'clicked_output(event, this)');
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
     this.self_output.classList.add('trigger');
     this.self_output.style.setProperty('stroke', 'none');
 
@@ -279,7 +280,8 @@ function output_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
+    this.svg_wrapper.onmouseup = function (event) { move_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
 
     this.self_parent = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -297,7 +299,7 @@ function output_block () {
     this.self_input.setAttribute('r', '8');
     this.self_input.setAttribute('fill', 'grey');
     this.self_input.setAttribute('stroke-width', '0');
-    this.self_input.setAttribute('onmousedown', 'output_connector(event, this)');
+    this.self_input.onmousedown = function (event) { output_connector(event, this); }
     this.self_input.classList.add("trigger");
 
     this.svg_wrapper.appendChild(this.self_parent);
@@ -338,7 +340,7 @@ function and_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
     
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -349,7 +351,7 @@ function and_block () {
     this.self_input_1.setAttribute('cy', '15');
     this.self_input_1.setAttribute('r', '7');
     this.self_input_1.setAttribute('fill', 'grey');
-    this.self_input_1.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_1.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_1.id = '1';
     this.self_input_1.setAttribute('stroke-width', '0');
     this.self_input_1.classList.add("trigger");
@@ -359,7 +361,7 @@ function and_block () {
     this.self_input_2.setAttribute('cy', '49');
     this.self_input_2.setAttribute('r', '7');
     this.self_input_2.setAttribute('fill', 'grey');
-    this.self_input_2.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_2.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_2.id = '2';
     this.self_input_2.setAttribute('stroke-width', '0');
     this.self_input_2.classList.add("trigger");
@@ -370,7 +372,7 @@ function and_block () {
     this.self_output.setAttribute('r', '7');
     this.self_output.setAttribute('fill', 'grey');
     this.self_output.setAttribute('stroke-width', '0');
-    this.self_output.setAttribute("onmousedown", "clicked_output(event, this)");
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
     this.self_output.classList.add("trigger");
     
     this.svg_wrapper.appendChild(this.self_body);
@@ -426,7 +428,7 @@ function nand_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
     
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -442,7 +444,7 @@ function nand_block () {
     this.self_input_1.setAttribute('cy', '15');
     this.self_input_1.setAttribute('r', '7');
     this.self_input_1.setAttribute('fill', 'grey');
-    this.self_input_1.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_1.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_1.id = '1';
     this.self_input_1.setAttribute('stroke-width', '0');
     this.self_input_1.classList.add("trigger");
@@ -452,7 +454,7 @@ function nand_block () {
     this.self_input_2.setAttribute('cy', '49');
     this.self_input_2.setAttribute('r', '7');
     this.self_input_2.setAttribute('fill', 'grey');
-    this.self_input_2.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_2.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_2.id = '2';
     this.self_input_2.setAttribute('stroke-width', '0');
     this.self_input_2.classList.add("trigger");
@@ -463,7 +465,7 @@ function nand_block () {
     this.self_output.setAttribute('r', '7');
     this.self_output.setAttribute('fill', 'grey');
     this.self_output.setAttribute('stroke-width', '0');
-    this.self_output.setAttribute("onmousedown", "clicked_output(event, this)");
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
     this.self_output.classList.add("trigger");
     
     this.svg_wrapper.appendChild(this.self_body);
@@ -522,7 +524,7 @@ function or_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
     
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -534,7 +536,7 @@ function or_block () {
     this.self_input_1.setAttribute('cy', '15');
     this.self_input_1.setAttribute('r', '7');
     this.self_input_1.setAttribute('fill', 'grey');
-    this.self_input_1.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_1.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_1.id = '1';
     this.self_input_1.setAttribute('stroke-width', '0');
     this.self_input_1.classList.add("trigger");
@@ -544,7 +546,7 @@ function or_block () {
     this.self_input_2.setAttribute('cy', '49');
     this.self_input_2.setAttribute('r', '7');
     this.self_input_2.setAttribute('fill', 'grey');
-    this.self_input_2.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_2.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_2.id = '2';
     this.self_input_2.setAttribute('stroke-width', '0');
     this.self_input_2.classList.add("trigger");
@@ -555,7 +557,7 @@ function or_block () {
     this.self_output.setAttribute('r', '7');
     this.self_output.setAttribute('fill', 'grey');
     this.self_output.setAttribute('stroke-width', '0');
-    this.self_output.setAttribute("onmousedown", "clicked_output(event, this)");
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
     this.self_output.classList.add("trigger");
     
     this.svg_wrapper.appendChild(this.self_body);
@@ -611,7 +613,7 @@ function nor_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
     
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -627,7 +629,7 @@ function nor_block () {
     this.self_input_1.setAttribute('cy', '15');
     this.self_input_1.setAttribute('r', '7');
     this.self_input_1.setAttribute('fill', 'grey');
-    this.self_input_1.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_1.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_1.id = '1';
     this.self_input_1.setAttribute('stroke-width', '0');
     this.self_input_1.classList.add("trigger");
@@ -637,7 +639,7 @@ function nor_block () {
     this.self_input_2.setAttribute('cy', '49');
     this.self_input_2.setAttribute('r', '7');
     this.self_input_2.setAttribute('fill', 'grey');
-    this.self_input_2.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_2.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_2.id = '2';
     this.self_input_2.setAttribute('stroke-width', '0');
     this.self_input_2.classList.add("trigger");
@@ -648,7 +650,7 @@ function nor_block () {
     this.self_output.setAttribute('r', '7');
     this.self_output.setAttribute('fill', 'green');
     this.self_output.setAttribute('stroke-width', '0');
-    this.self_output.setAttribute("onmousedown", "clicked_output(event, this)");
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
     this.self_output.classList.add("trigger");
     
     this.svg_wrapper.appendChild(this.self_body);
@@ -707,7 +709,7 @@ function xor_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
     
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -723,7 +725,7 @@ function xor_block () {
     this.self_input_1.setAttribute('cy', '15');
     this.self_input_1.setAttribute('r', '7');
     this.self_input_1.setAttribute('fill', 'grey');
-    this.self_input_1.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_1.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_1.id = '1';
     this.self_input_1.setAttribute('stroke-width', '0');
     this.self_input_1.classList.add("trigger");
@@ -733,7 +735,7 @@ function xor_block () {
     this.self_input_2.setAttribute('cy', '49');
     this.self_input_2.setAttribute('r', '7');
     this.self_input_2.setAttribute('fill', 'grey');
-    this.self_input_2.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_2.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_2.id = '2';
     this.self_input_2.setAttribute('stroke-width', '0');
     this.self_input_2.classList.add("trigger");
@@ -744,7 +746,7 @@ function xor_block () {
     this.self_output.setAttribute('r', '7');
     this.self_output.setAttribute('fill', 'grey');
     this.self_output.setAttribute('stroke-width', '0');
-    this.self_output.setAttribute("onmousedown", "clicked_output(event, this)");
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
     this.self_output.classList.add("trigger");
     
     this.svg_wrapper.appendChild(this.self_body);
@@ -799,7 +801,7 @@ function not_block () {
     this.svg_wrapper.setAttribute('height', '64');
     this.svg_wrapper.setAttribute('width', '64');
     this.svg_wrapper.setAttribute('clickable', 'true');
-    this.svg_wrapper.setAttribute('onmousedown', 'clicked_block(event, this)')
+    this.svg_wrapper.onmousedown = function (event) { clicked_block(event, this); }
     this.svg_wrapper.style = "fill: none; stroke: black; stroke-width: 2; position: absolute;";
     
     this.self_body = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -816,7 +818,7 @@ function not_block () {
     this.self_input_1.setAttribute('cy', '32');
     this.self_input_1.setAttribute('r', '7');
     this.self_input_1.setAttribute('fill', 'grey');
-    this.self_input_1.setAttribute("onmousedown", "clicked_input(event, this)");
+    this.self_input_1.onmousedown = function (event) { clicked_input(event, this); }
     this.self_input_1.id = '1';
     this.self_input_1.setAttribute('stroke-width', '0');
     this.self_input_1.classList.add("trigger");
@@ -827,7 +829,8 @@ function not_block () {
     this.self_output.setAttribute('r', '7');
     this.self_output.setAttribute('fill', 'green');
     this.self_output.setAttribute('stroke-width', '0');
-    this.self_output.setAttribute("onmousedown", "clicked_output(event, this)");
+    this.self_output.onmousedown = function (event) { clicked_output(event, this); }
+
     this.self_output.classList.add("trigger");
     
     this.svg_wrapper.appendChild(this.self_body);
