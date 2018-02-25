@@ -157,7 +157,7 @@
         <p>
             The first, and arguably most important, component is the latch. This is the part of the flip-flop that enables binary values to be stored and it achieves this through the use of <i>feedback</i>. Feedback refers to when output from further along the circuit is fed back into the circuit itself at an earlier point. You can likely see the value of this already, and it is this concept from which the latch is built. We will examine the RS-NAND latch which passes two inverted values - R and S, which stand for reset and set respectively - into two NAND gates, who's input is fed back into the other gate. This takes the form of:
             <br>
-            <img src="latch.svg">
+            <img src="latch.svg" style='width: 50%'>
             <br>
             And from this we can tell that passing some values into the loop, say S is 1 and R is 0, will form a loop due to feedback and will result in Q and <span style='border-top: 1px solid black'>Q</span> maintaining their state until a change occurs. We can extend this to form an entire truth table that describes the function of the RS-NAND latch.
             <table>
@@ -199,7 +199,7 @@
 
         <h3>The Clock</h3>
         <p>
-            Another issue with the simple latch above is that the value stored within the latch can change whenever the inputs are changed. This can cause problems as we may not want the stored values to change whenever the inputs do, we may only want them to change once a second, or hour, or day. Thus to solve this we introduce the clock component. The clock component is merely an extra input that changes from positive to negative at specific intervals. By passing R and S through a NAND gate that is attached to the clock we can ensure that the value stored in the latch only changes when the clock is 0. Therefore changing the value of a latch multiple times is prohibited. Adding a clock component leads to the truth table becoming:
+            Another issue with the simple latch above is that if we have multiple latches then they can all change at different times. This can cause problems as we want our latches to be synchronised. Thus to solve this we introduce the clock component. The clock component is merely an extra input that changes from positive to negative at specific intervals. By passing R and S through a NAND gate that is attached to the clock we can ensure that the value stored in the latch only changes when the clock is 1. Therefore if multiple latches are connected to the same clock they will all change at the same time. Adding a clock component leads to the truth table becoming:
             <br>
             <table>
                 <colgroup>
@@ -297,33 +297,13 @@
                 <tr>
                     <td>Clock</td>
                     <td>D</td>
-                    <td>notD</td>
 
                     <td>Q</td>
                     <td>notQ</td>
                 </tr>
                 <tr>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>1</td>
-                    
-
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>0</td>
-                    
-
-                    <td>1</td>
-                    <td>0</td>
-                </tr>
-                <tr>
                     <td>0</td>
                     <td>0</td>
-                    <td>1</td>
                     
 
                     <td>Maintain state</td>
@@ -332,16 +312,159 @@
                 <tr>
                     <td>0</td>
                     <td>1</td>
-                    <td>0</td>
                     
 
                     <td>Maintain state</td>
                     <td>Maintain state</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    
+
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    
+
+                    <td>1</td>
+                    <td>0</td>
                 </tr>
             </table>
             <br>
-            The D-type latch has the design: <br>
+            The D-type latch has the design: 
+            <br>
             <img src="d-type.svg" style='width: 50%'>
+        </p>
+
+        <h3>The Edge Trigger</h3>
+        <p>
+            This is the component of the circuit that is intended to work with the clock in such a way so as to prevent the value of the latch changing mulitple times when the clock is set to 1. This helps to prevent issues with erroneous data caused by the values changing when they are not supposed to. The edge trigger does this by ensuring that the latch only changes once, when the clock changes from positive to negative. When the voltage of the clock changes it is known as an <i>edge</i>. This is much easier to understand as a visual:
+            <br>
+            <img src="edge-graph.gif" style='width: 50%'>
+            <br>
+            The above image demonstrates how voltage can rise and fall in a circuit, with the top lines representing a value of 1 and the bottom representing 0. The red and black circles represent where the voltage changes and thus highlight a positive and negative edge respectively. This allows us to understand what an edge trigger does, it allows the stored value to change only once, at a negative or positive edge depending upon the type of trigger used. 
+            <br>
+            Building an edge trigger is actually quite simple. To build this trigger we connect two D latches in sequence, the first it called a <i>master latch</i> and the second is called a <i>slave latch</i>. The latches use the same clocking component but the value is inverted before being passed into the slave latch. Furthermore the value of D for the slave latch is determined by the Q value of the master. What this means is that when the value of the clock is 1 then the value within the master latch can change as often as the D changes. However the second that the clock changes to 0 the value of the master latch can no longer change and the slave latch becomes mutable. At this point the final value of the master latch is passed into the slave latch and the value is immutable until the clock changes from positive to negative again. This may seem somewhat complex but is actually quite simple, the design of this is a complete flip flop and looks like this:
+            <br>
+            <img src="edge-trigger-flip-flop.svg" style='width: 50%'>
+            <br>
+            The above image introduces a new way of looking at circuit diagrams where labelled boxes are used to represent an entire section of circuitry. Don't worry about this too much, all it does is simplify the diagram and it is identical to having two D latches represented in sequence.
+        </p>
+
+        <h2>Shift Registers</h2>
+        <p>
+            Being able to store single values is of course useful, but just like half adders and full adders it is more important to be able to store and operate on values that require significantly more bits. This is achieved using <i>shift registers</i>. All a shift register is, however, is a group of flip flops that are synchronised through the use of a common clock. Shift registers become significantly more complex than flip flops however in that there are many different varieties, all of which operate in significantly different ways. As a result we will only cover the serial in - serial out variation. 
+            <br>
+            This type of register is constructed from an arbitrary number of flip flops that are connected to the same clock and whose D value is determined by the previous flip flop's output. What this means is that if we want to store a value then values must pass through all the positions to their left before reaching their intended destination. The best way to understand this is through examples.
+            <br>
+            Let's imagine how we would store the value 1001 in a serial in - serial out shift register made up of four flip flops. These flip flops are labelled 4-1 in descending order from the left. This means that we want to store:
+            <ul>
+                <li> 1 in 4 </li>
+                <li> 0 in 3 </li>
+                <li> 0 in 2 </li>
+                <li> 1 in 1 </li>
+            </ul>
+            As we want a 1 in the last flip flop the first value we need to pass into the register is a 1 as this will move all the way over to the final flip flop. After the 1 we need to pass two zeroes to fill 3 and 2 and finally we need to pass a 1 to fill 4. This is perhaps more easily visualised in table form:
+            <br>
+            <table>
+                <tr>
+                    <th colspan="2">Input</th>
+                    <th colspan="4">Storage</th>
+                </tr>
+                <tr>
+                    <td>Clock</td>
+                    <td>D</td>
+
+                    <td>Flip flop 4</td>
+                    <td>Flip flop 3</td>
+                    <td>Flip flop 2</td>
+                    <td>Flip flop 1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>X</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>X</td>
+
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>X</td>
+
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>X</td>
+
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+            </table>
+            <br>
+            As you can see the values passed in move through each flip flop before reaching their final destination.  The circuit design of a serial in - serial out register is:
+            <br>
+            <img src="shift-register.svg" style='width: 50%'>
+            <br>
+            <i>Note: it is important to point out that most shift registers have another input that allows one to clear all the data stored in the register instantly, this is not shown in this diagram</i>
+            <br>
+            The advantage of this system is that it allows mutating the data by shifting it further along and this can simplify some arithmetic operations. The main disadvantage of this system is that data has to be written and read one bit at a time. The issue of writing can be solved by allowing data to be passed into each flip flop at the same time this is known as <i>parallel out</i> and the issue of reading can be solved by allowing data to be outputted at the same time rather than just through the final flip flops output, this is known as <i>parallel out</i>. The disadvantages of those systems is that the data is immutable and thus serial in - serial out registers are better utilised for processing and parallel in - parallel out are better utilised for the storage of data.
         </p>
     </body>
 </html>
