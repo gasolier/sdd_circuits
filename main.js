@@ -1,3 +1,4 @@
+let block_array = new Array();
 let moving = false;
 let block_to_move = null;
 let connect_line = false;
@@ -9,9 +10,8 @@ let output_connection = false;
 let current_action = "Nothing";
 let mode = "learn";
 let learn_frame = document.getElementById('learn');
-let current_lesson = 4;
+let current_lesson = 0;
 let sandbox_levels = [1,3,5];
-let all_line_elements = new Array();
 
 function create_line (x1, y1, x2, y2) {
     let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
@@ -31,6 +31,17 @@ function create_line (x1, y1, x2, y2) {
     viewer.appendChild(line);
 }
 
+function clear () {
+    for (let i = 0; i < block_array.length; i++){
+        viewer.removeChild(document.getElementById(i.toString()));
+    }
+    let line_arr = document.querySelectorAll('.line');
+    Array.prototype.forEach.call(line_arr, function(line_) {
+        viewer.removeChild(line_);
+    });
+    block_array.length = 0;
+}
+
 function next_stage () {
     current_lesson += 1;
     if (~sandbox_levels.indexOf(current_lesson)) {
@@ -42,6 +53,7 @@ function next_stage () {
         learn.style.setProperty('display', 'inline');
         learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
     }
+    clear();
 }
 
 function move_block (ev) {
@@ -846,13 +858,10 @@ function not_block () {
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
         this.connected_children.forEach( function(block) {
-            console.log("Beep updating", block);
             block.update_self(depth+1);
         });
     }
 }
-
-let block_array = new Array();
 
 create_and.onclick = () => {
     block_array.push(new and_block());
@@ -884,6 +893,10 @@ create_output.onclick = () => {
 
 create_input.onclick = () => {
     block_array.push(new input_block());
+}
+
+clear_screen.onclick = () => {
+    clear();
 }
 
 sandbox.onclick = move_block;
