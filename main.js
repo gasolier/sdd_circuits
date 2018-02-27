@@ -901,6 +901,25 @@ clear_screen.onclick = () => {
     clear();
 }
 
+lesson_selector.onchange = () => {
+    let selected_lesson = parseInt(lesson_selector.value) - 1;
+    current_lesson = selected_lesson;
+    if (~sandbox_levels.indexOf(current_lesson)) {
+        learn.style.setProperty('display', 'none');
+        sandbox.style.setProperty('display', 'inline');
+    }
+    else {
+        sandbox.style.setProperty('display', 'none');
+        learn.style.setProperty('display', 'inline');
+        learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
+    }
+    clear();
+}
+
+next_lesson.onclick = () => {
+    next_stage();  
+}
+
 sandbox.onclick = move_block;
 
 sandbox.onmousemove = (ev) => {
@@ -916,9 +935,5 @@ sandbox.onmousemove = (ev) => {
 
 document.getElementById('action').innerHTML = current_action;
 learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
-
-next_lesson.onclick = () => {
-    next_stage();  
-}
 
 document.getElementById('action').innerHTML = current_action;
