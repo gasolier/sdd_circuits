@@ -53,7 +53,7 @@
 
         <h2>Full Adder</h2>
         <p>
-            There is, however, a major issue with the half-adder. By itself it can only add two binary digits and this is unsuitable for constructing more circuits where multiple binary values are required to accurately represent integer or floating point values. If we wish to create a circuit that can add larger values than we need to extend the circuit in such a way that it is able to take into account the carry values from previous digit additions.
+            There is, however, a major issue with the half-adder. By itself it can only add two binary digits and this is unsuitable for constructing more circuits where multiple binary values are required to accurately represent integer or floating point values. If we wish to create a circuit that can add larger values then we need to extend the circuit in such a way that it is able to take into account the carry values from previous digit additions.
             <br>
             To do this we need to create a larger circuit from two half-adders, known as a full adder. The truth table for a full adder is:
             <table>
@@ -291,7 +291,7 @@
                     <col span='5' style='width: 200px'>
                 </colgroup>
                 <tr>
-                    <th colspan='3'>Input</th>
+                    <th colspan='2'>Input</th>
                     <th colspan='2'>Output</th>
                 </tr>
                 <tr>
@@ -465,6 +465,16 @@
             <i>Note: it is important to point out that most shift registers have another input that allows one to clear all the data stored in the register instantly, this is not shown in this diagram</i>
             <br>
             The advantage of this system is that it allows mutating the data by shifting it further along and this can simplify some arithmetic operations. The main disadvantage of this system is that data has to be written and read one bit at a time. The issue of writing can be solved by allowing data to be passed into each flip flop at the same time this is known as <i>parallel out</i> and the issue of reading can be solved by allowing data to be outputted at the same time rather than just through the final flip flops output, this is known as <i>parallel out</i>. The disadvantages of those systems is that the data is immutable and thus serial in - serial out registers are better utilised for processing and parallel in - parallel out are better utilised for the storage of data.
+        </p>
+
+        <h2>What's Next?</h2>
+        <p>
+            Now that we've covered speciality circuits we have covered all the specific technical knowledge as it relates to the hardware. The next lesson will focus on the steps that should be taken to understand and design any given circuit. After that we will cover boolean algebra and how to convert between the different methods of representing circuits. Now you'll go back into the sandbox, however you will not be able to construct flip flops as feedback is not supported in this program. You should, however be able to construct adders and this segues into your challenge.
+        </p>
+
+        <h2>Challenge</h2>
+        <p>
+            Your challenge for this section of work is to build a circuit that can add two four bit numbers. To do this you will first need to practise building half adders and full adders. After you feel that you have a solid grasp on this you should practice chaining full adders together. After this you should be able to construct a circuit that can accurately add two four bit numbers. 
         </p>
     </body>
 </html>

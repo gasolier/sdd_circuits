@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Circuit Simulator</title>
+        <link href="lesson.css" rel='stylesheet'>
+
+    </head>
+
+    <body id='doc_body'>
+        <h1>Boolean Algebra</h1>
+        <p>
+            Welcome to the fourth lesson on logic gates and circuits. This lesson will go over another way of representing binary logic (we already know about truth tables and circuit diagrams). Known as boolean algebra this is a somewhat conceptually complex method however it makes sense as long as one puts in some work.
+        </p>
+
+        <h2>Brief History</h2>
+        <p>
+            Boolean algebra was created by the mathematician George Boole and was first described in his book <i>The Mathematical Analysis of Logic</i> in 1847 and then further described in his 1854 text <i>An Investigation of the Laws of Thought</i>. Boole was helped in this endeavour by his friend and colleague Augustus De Morgan.
+        </p>
+
+        <h2>Basic Notation and Overview</h2>
+        <p>
+            The actual purpose of boolean algebra is to present a notation in which equations can be created that will always evaluate to <i>true</i> or <i>false</i>. As such the representation is more similar to logic gates or truth tables than to regular algebraic notation. The language itself shows variables as a capitalised letter, A, or a capitalised letter with a line over the top if it is negative, for example not A is <span class="not">A</span>.
+            <br>
+            Boolean algebra also has three operators, OR, AND and XOR all of which are the same as their logic gate counterparts. These are shown as follows:
+            <ul>
+                <li>A OR B: A+B</li>
+                <li>A AND B: AB</li>
+                <li>A XOR B: A<span class='xor'>+</span>B</li>
+            </ul>
+        </p>
+
+        <h2>Laws</h2>
+        <p>
+            The true strength of boolean algebra comes not just from the ease with which it can depict relatively complex logical passages but also with the laws and rules that show how equations can be simplified. These laws are below.
+            <ul>
+                <li>A+B = B+A</li>
+                <li>AB = BA</li>
+                <li>(A+B)+C = A+(B+A)</li>
+                <li>(AB)C = A(BC)</li>
+                <li>A(B+C) = AB+AC</li>
+                <li>A+(BC) = (A+B)(A+C)</li>
+                <li>A+A = A</li>
+                <li>AA = A</li>
+                <li>0+A = A</li>
+                <li>0A = 0</li>
+                <li>1+A = 1</li>
+                <li>1A = A</li>
+                <li><span class='not'>A</span>+A = 1</li>
+                <li><span class='not'>A</span>A = 0</li>
+                <li>A+<span class='not'>A</span>B = A+B</li>
+                <li>A(<span class='not'>A</span>+B) = AB</li>
+                <li>(<span class='not'>A+B</span>) = <span class='not'>AB</span></li>
+                <li>(<span class='not'>AB</span>) = <span class='not'>A</span>+<span class='not'>B</span></li>
+            </ul>
+        </p>
+
+        <h2>What's Next?</h2>
+        <p>
+            Congratulations on passing the second last lesson! The final lesson will be on practical skills, explaining how to build circuits from a set of requirements, and after that there will be a short quiz before you can use the sandbox for as long as you'd like.
+        </p>
+
+        <h2>Challenge</h2>
+        <p>
+            Your challenge for this lesson is to build a circuit that is described by the equation: AB(<span class='not'>A+B</span>)(A+B). It may be useful to see if you can simplify the equation before building the circuit itself, as it may lower the amount of gates required.
+        </p>
+    </body>
+</html>

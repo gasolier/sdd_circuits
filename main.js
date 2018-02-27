@@ -4,14 +4,13 @@ let block_to_move = null;
 let connect_line = false;
 let global_line_x = 0;
 let global_line_y = 0;
-let input_setting = true;
 let connector_block = null;
 let output_connection = false;
 let current_action = "Nothing";
 let mode = "learn";
 let learn_frame = document.getElementById('learn');
-let current_lesson = 0;
-let sandbox_levels = [1,3,5];
+let current_lesson = 8;
+let sandbox_levels = [1,3,5,7];
 
 function create_line (x1, y1, x2, y2) {
     let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
@@ -118,7 +117,7 @@ function clicked_input (ev, input_block) {
         return;
     }
     parent_block = input_block.parentElement;
-    if (input_setting && output_connection == false) {
+    if (output_connection == false) {
         if (input_block.id == '1') {
             block_array[parseInt(parent_block.id)].input_1 = block_array[parseInt(parent_block.id)].input_1 ? false : true;
         }
