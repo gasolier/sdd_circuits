@@ -4,6 +4,7 @@
 
         <title>Circuit Simulator</title>
         <link href="lesson.css" rel='stylesheet'>
+        <link href="../main_lesson.css" rel='stylesheet'>
 
     </head>
 
@@ -19,31 +20,54 @@
         <h2>More Logic Gates</h2>
         <p>
             Continuing on from the previous lesson this lesson will deal with more complex logic gates, how they work and what they return.
-            <h3>XOR Gate</h3>
+        </p>
+
+        <h3>XOR Gate</h3>
+        <p class='h3p'>
             The name of this logic gate stands for eXclusive-OR gate. Similarly to the more simple OR gate the XOR gate takes two inputs and returns true if either provide the gate with a 1. However, unlike the OR gate which will output a 1 if both inputs are true simulataneously the XOR gate will only return positively if 1 is true and the other is false, this makes it an <i>exclusive</i> gate. Thus the XOR gate returns:
             <ul> 
                 <li>1 if one input is true and the other is false</li>
                 <li>0 if both inputs are false</li>
                 <li>0 if both inputs are true</li>
             </ul>
-            The XOR gate is represented by this sign: <br> <img src='XOR.png' alt='XOR gate symbol' width='50%'>
-            <h3>NAND Gate</h3>
+        </p>
+        <p class='h3p'>
+            The XOR gate is represented by this sign: 
+            <br> 
+            <img src='XOR.png' alt='XOR gate symbol' width='50%'>
+        </p>
+
+        <h3>NAND Gate</h3>
+        <p class='h3p'>
             A NAND gate is similar to an AND gate but at the end of the process you flip the output. This is identical to placing a NOT after the AND gate. For example if two 1's are passed into an AND gate it will pass out a 1 that when passed through a NOT results in a zero, this is exactly what the NAND gate returns. The results of the NAND gate are:
             <ul> 
                 <li>0 if both inputs are true</li>
                 <li>1 if one input is true and the other is false</li>
                 <li>1 if both inputs are false</li>
             </ul>
-            The NAND gate is represented by this sign: <br> <img src='NAND.png' alt='NAND gate symbol' width='50%'>
-            <h3>NOR Gate</h3>
+        </p>
+        <p class='h3p'>
+            The NAND gate is represented by this sign: 
+            <br> 
+            <img src='NAND.png' alt='NAND gate symbol' width='50%'>
+        </p>
+
+
+        <h3>NOR Gate</h3>
+        <p class='h3p'>
             Similarly to a NAND gate, a NOR gate is the inverted result of it's N-less form. For example if one 1 is passed through an OR gate it will return a 1 that when passed through an inverter returns a 0, this is the same result as passing a single 1 through a NOR gate. The results of the NOR gate are:
             <ul> 
                 <li>0 if both inputs are true</li>
                 <li>0 if one input is true and the other is false</li>
                 <li>1 if both inputs are false</li>
             </ul>
-            The NOR gate is represented by this sign: <br> <img src='NOR.png' alt='NOR gate symbol' width='50%'>
         </p>
+        <p class='h3p'>
+            The NOR gate is represented by this sign: 
+            <br> 
+            <img src='NOR.png' alt='NOR gate symbol' width='50%'>
+        </p>
+
         <h2>Truth Tables</h2>
         <p>
             At this point in time you may be wondering as to whether or not there is a simpler way of representing the inputs and outputs of a circuit. And there is! Known as a <i>truth table</i> this method of representation works by constructing a table where each of the columns stands for an arbitrary input or output. The value of the input/output is of course given by the value of either 0 or 1 in each row. While this may seem difficult to understand at first it is actually a very simple way to understand and describe the inputs and outputs of any given circuit. The truth tables that describe the logic gates we have explored are given below in order to help with your understanding. In all of these tables C is the output.

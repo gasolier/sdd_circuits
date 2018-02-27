@@ -1,0 +1,29 @@
+body {
+	font-family: serif;
+	padding: 0% 10%;
+}
+
+h1 {
+	text-align: center;
+	font-family: sans-serif;
+}
+
+h2, h3 {
+	font-family: sans-serif;
+}
+
+h3 {
+	margin-left: 5%;
+}
+
+ul {
+	padding: inherit;
+}
+
+table {
+	padding: inherit;
+}
+
+.h3p {
+	padding-left: 5%;
+}

@@ -9,7 +9,7 @@ let output_connection = false;
 let current_action = "Nothing";
 let mode = "learn";
 let learn_frame = document.getElementById('learn');
-let current_lesson = 8;
+let current_lesson = 0;
 let sandbox_levels = [1,3,5,7];
 
 function create_line (x1, y1, x2, y2) {

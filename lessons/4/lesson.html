@@ -4,6 +4,8 @@
 
         <title>Circuit Simulator</title>
         <link href="lesson.css" rel='stylesheet'>
+        <link href="../main_lesson.css" rel='stylesheet'>
+
     </head>
 
     <body id='doc_body'>
@@ -48,6 +50,7 @@
         		</tr>
         	</table><br>
             Actually building this circuit is also relatively simple. We only need two logic gates as, as we can see from the truth table, the circuit returns a carry of 1 only if both inputs are true and returns a sum of 1 only if only one input is true. The gates that match these specifications are, of course, the XOR and the AND gates. Thus the design of an half-adder is:
+            <br>
             <img src='Half-adder.svg' style='width: 50%'>
         </p>
 
@@ -154,7 +157,7 @@
         </p>
 
         <h3>The Latch</h3>
-        <p>
+        <p class='h3p'>
             The first, and arguably most important, component is the latch. This is the part of the flip-flop that enables binary values to be stored and it achieves this through the use of <i>feedback</i>. Feedback refers to when output from further along the circuit is fed back into the circuit itself at an earlier point. You can likely see the value of this already, and it is this concept from which the latch is built. We will examine the RS-NAND latch which passes two inverted values - R and S, which stand for reset and set respectively - into two NAND gates, who's input is fed back into the other gate. This takes the form of:
             <br>
             <img src="latch.svg" style='width: 50%'>
@@ -193,12 +196,13 @@
                     <td>Illegal</td>
                 </tr>
             </table>
-            <br>
+        </p>
+        <p class='h3p'>
             The truth table, however, highlights a problem with the latch. If R and S are both equal to 1 then the operation is illegal and the latch will not work correctly. We will adress this after discussing the clock component.
         </p>
 
         <h3>The Clock</h3>
-        <p>
+        <p class='h3p'>
             Another issue with the simple latch above is that if we have multiple latches then they can all change at different times. This can cause problems as we want our latches to be synchronised. Thus to solve this we introduce the clock component. The clock component is merely an extra input that changes from positive to negative at specific intervals. By passing R and S through a NAND gate that is attached to the clock we can ensure that the value stored in the latch only changes when the clock is 1. Therefore if multiple latches are connected to the same clock they will all change at the same time. Adding a clock component leads to the truth table becoming:
             <br>
             <table>
@@ -283,7 +287,8 @@
                     <td>Illegal</td>
                 </tr>
             </table>
-            <br>
+        </p>
+        <p class='h3p'>
             As you can see, whenever the value of the clock is 0 the latch maintains its previous state and when the clock is 1 we are free to modify the value within the latch. Unfortunately we still have the issue of illegal inputs. This is actually an extremely simple and yet elegant fix. If you examine the above table the only time that we change the value stored inside the latch is when S and R are the inverse of each other. Thus we can rather simply fix the issue of illegal inputs by only accepting a single bit of input and making the other input its inverse using a NOT gate. This is known as a D-type latch and it has the truth table:
             <br>
             <table>
@@ -334,14 +339,15 @@
                     <td>0</td>
                 </tr>
             </table>
-            <br>
+        </p>
+        <p class='h3p'>
             The D-type latch has the design: 
             <br>
             <img src="d-type.svg" style='width: 50%'>
         </p>
 
         <h3>The Edge Trigger</h3>
-        <p>
+        <p class='h3p'>
             This is the component of the circuit that is intended to work with the clock in such a way so as to prevent the value of the latch changing mulitple times when the clock is set to 1. This helps to prevent issues with erroneous data caused by the values changing when they are not supposed to. The edge trigger does this by ensuring that the latch only changes once, when the clock changes from positive to negative. When the voltage of the clock changes it is known as an <i>edge</i>. This is much easier to understand as a visual:
             <br>
             <img src="edge-graph.gif" style='width: 50%'>
