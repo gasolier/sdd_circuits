@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Circuit Simulator</title>
+        <link href="lesson.css" rel='stylesheet'>
+        <link href="../main_lesson.css" rel='stylesheet'>
+
+    </head>
+
+    <body id='doc_body'>
+        <h1>The Quiz</h1>
+        <p>
+            Welcome to your final challenge. This is a simple multiple choice quiz of 20 questions that draw from every single lesson. Don't worry, as long as you paid attention you will be entirely capable of doing this.
+        </p>
+
+        <h2>The Questions</h2>
+
+        <h3>1</h3>
+        <p class="h3p">
+            If an AND gate is passed the inputs of 1 and 1 what will it return?
+            <br>
+            <ul>
+                <li><input type='radio' name='q1' value='correct'> 1</li>
+                <li><input type='radio' name='q1' value='incorrect'> 0</li>
+                <li><input type='radio' name='q1' value='incorrect'> 10</li>
+                <li><input type='radio' name='q1' value='incorrect'> A</li>
+            </ul>
+        </p>
+
+        <h3>2</h3>
+        <p class="h3p">
+            If an NAND gate is passed the inputs of 1 and 1 what will it return?
+            <br>
+            <ul>
+                <li><input type='radio' name='q2' value='incorrect'> 1</li>
+                <li><input type='radio' name='q2' value='correct'> 0</li>
+                <li><input type='radio' name='q2' value='incorrect'> 10</li>
+                <li><input type='radio' name='q2' value='incorrect'> A</li>
+            </ul>
+        </p>
+
+        <h3>3</h3>
+        <p class="h3p">
+            What logic gates are required to build an XOR gate out of the following options?
+            <br>
+            <ul>
+                <li><input type='radio' name='q3' value='incorrect'> 1 AND gate, 2 OR gates and 1 NOT gate</li>
+                <li><input type='radio' name='q3' value='incorrect'> 1 NOT gate, 2 AND gates and 1 NOR gate</li>
+                <li><input type='radio' name='q3' value='incorrect'> 2 NOT gates and 1 OR gate</li>
+                <li><input type='radio' name='q3' value='correct'> 1 NAND gate, 1 OR gate and 1 AND gate</li>
+            </ul>
+        </p>
+
+        <h3>4</h3>
+        <p class="h3p">
+            What is the third step taken when designing a circuit?
+            <br>
+            <ul>
+                <li><input type='radio' name='q4' value='incorrect'> Identify Required Components</li>
+                <li><input type='radio' name='q4' value='incorrect'> Evaluate the Design</li>
+                <li><input type='radio' name='q4' value='correct'> Check The Solution</li>
+                <li><input type='radio' name='q4' value='incorrect'> Identify Required Inputs and Outputs</li>
+            </ul>
+        </p>
+
+        <h3>5</h3>
+        <p class="h3p">
+            What is a flip flop?
+            <br>
+            <ul>
+                <li><input type='radio' name='q5' value='incorrect'> A type of shoe</li>
+                <li><input type='radio' name='q5' value='correct'> A bistable circuit used for storing binary data</li>
+                <li><input type='radio' name='q5' value='incorrect'> A circuit that adds two bits together</li>
+                <li><input type='radio' name='q5' value='incorrect'> A logic gate that takes two bits, adds them and inverts the sum</li>
+            </ul>
+        </p>
+
+        <button id='submit_answers'>Submit</button>
+    </body>
+
+    <script>
+        let score = 0;
+        submit_answers.onclick = function () {
+            for (let i = 1; i < 6; i++) {
+                let answer = document.querySelector('input[name="q'+ i +'"]:checked');
+                if (answer.value == "correct") {
+                    answer.parentElement.classList.add('correct');
+                    score++;
+                }
+                else {
+                    answer.parentElement.classList.add('incorrect');
+                    let correct_ans = document.querySelector('input[name="q'+ i +'"][value="correct"]');
+                    correct_ans.parentElement.classList.add('correct');
+                }
+            }
+        }
+    </script>
+</html>

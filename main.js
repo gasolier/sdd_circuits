@@ -10,7 +10,7 @@ let current_action = "Nothing";
 let mode = "learn";
 let learn_frame = document.getElementById('learn');
 let current_lesson = 0;
-let sandbox_levels = [1,3,5,7];
+let sandbox_levels = [1,3,5,7,10];
 
 function create_line (x1, y1, x2, y2) {
     let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
@@ -48,9 +48,10 @@ function next_stage () {
         sandbox.style.setProperty('display', 'inline');
     }
     else {
+        learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
         sandbox.style.setProperty('display', 'none');
         learn.style.setProperty('display', 'inline');
-        learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
+        
     }
     lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
     clear();
@@ -910,9 +911,9 @@ lesson_selector.onchange = () => {
         sandbox.style.setProperty('display', 'inline');
     }
     else {
+        learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
         sandbox.style.setProperty('display', 'none');
         learn.style.setProperty('display', 'inline');
-        learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
     }
     clear();
 }

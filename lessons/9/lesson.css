@@ -1,0 +1,24 @@
+.not {
+	border-top: 2px solid black;
+}
+
+.xor {
+	border: 2px solid black;
+	border-radius: 100%;
+}
+
+.incorrect {
+	background-color: #ff5a73;
+}
+
+.correct {
+	background-color: #73ff5a;
+}
+
+ul {
+	list-style-type: none;
+}
+
+button {
+	align-self: center;
+}
