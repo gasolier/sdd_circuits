@@ -52,6 +52,7 @@ function next_stage () {
         learn.style.setProperty('display', 'inline');
         learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
     }
+    lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
     clear();
 }
 
@@ -933,6 +934,7 @@ sandbox.onmousemove = (ev) => {
     }
 }
 
+lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
 document.getElementById('action').innerHTML = current_action;
 learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
 
