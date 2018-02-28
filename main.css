@@ -12,11 +12,12 @@
 
 .learn {
 	position: absolute;
-	left: 2.5%;
+	left: 0%;
 	top: 5%;
-	height: 90%;
-    width: 95%;
-    border: 2px solid black;
+	height: 94.5%;
+    width: 100%;
+    border: none;
+    border-top: 2px solid black;
 }
 
 .line {
@@ -40,14 +41,6 @@
     height: 100%;
     width: 89.75%;
     border: none;
-}
-
-#header {
-	
-}
-
-body {
-
 }
 
 div {

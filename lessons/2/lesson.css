@@ -1,13 +1,15 @@
 table {
 	display: inline-block;
 	border-collapse: collapse;
-	margin-left: 10%;
 }
 
 th {
 	border: 2px solid black;
+	width: 30px;
 }
 
 td {
 	border: 1px solid black;
+	text-align: center;
+	width: 30px;
 }

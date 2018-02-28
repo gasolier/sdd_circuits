@@ -42,6 +42,13 @@ function clear () {
 }
 
 function next_stage () {
+    if (current_lesson == 10) {
+        next_lesson.disabled = true; 
+        return;
+    }
+    else {
+        next_lesson.disabled = false;
+    }
     current_lesson += 1;
     if (~sandbox_levels.indexOf(current_lesson)) {
         learn.style.setProperty('display', 'none');
@@ -914,6 +921,12 @@ lesson_selector.onchange = () => {
         learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
         sandbox.style.setProperty('display', 'none');
         learn.style.setProperty('display', 'inline');
+    }
+    if (current_lesson == 10) {
+        next_lesson.disabled = true; 
+    }
+    else {
+        next_lesson.disabled = false; 
     }
     clear();
 }

@@ -24,7 +24,7 @@
 
         <h3>XOR Gate</h3>
         <p class='h3p'>
-            The name of this logic gate stands for eXclusive-OR gate. Similarly to the more simple OR gate the XOR gate takes two inputs and returns true if either provide the gate with a 1. However, unlike the OR gate which will output a 1 if both inputs are true simulataneously the XOR gate will only return positively if 1 is true and the other is false, this makes it an <i>exclusive</i> gate. Thus the XOR gate returns:
+            The name of this logic gate stands for eXclusive-OR gate. Similarly to the more simple OR gate the XOR gate takes two inputs and returns true if either provide the gate with a 1. However, unlike the OR gate which will output a 1 if both inputs are true simultaneously the XOR gate will only return positively if 1 is true and the other is false, this makes it an <i>exclusive</i> gate. Thus the XOR gate returns:
             <ul> 
                 <li>1 if one input is true and the other is false</li>
                 <li>0 if both inputs are false</li>
@@ -70,14 +70,18 @@
 
         <h2>Truth Tables</h2>
         <p>
-            At this point in time you may be wondering as to whether or not there is a simpler way of representing the inputs and outputs of a circuit. And there is! Known as a <i>truth table</i> this method of representation works by constructing a table where each of the columns stands for an arbitrary input or output. The value of the input/output is of course given by the value of either 0 or 1 in each row. While this may seem difficult to understand at first it is actually a very simple way to understand and describe the inputs and outputs of any given circuit. The truth tables that describe the logic gates we have explored are given below in order to help with your understanding. In all of these tables C is the output.
+            At this point in time you may be wondering as to whether or not there is a simpler way of representing the inputs and outputs of a circuit. And there is! Known as a <i>truth table</i> this method of representation works by constructing a table where each of the columns stands for an arbitrary input or output. The value of the input/output is of course given by the value of either 0 or 1 in each row. While this may seem difficult to understand at first it is actually a very simple way to understand and describe the inputs and outputs of any given circuit. The truth tables that describe the logic gates we have explored are given below in order to help with your understanding. In all of these tables, C is the output.
             
             <table>
                 <caption>AND</caption>
                 <tr>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <th colspan='2'>Inputs</th>
+                    <th colspan='1'>Output</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
                 </tr>
                 <tr>
                     <td>0</td>
@@ -105,9 +109,13 @@
             <table>
                 <caption>OR</caption>
                 <tr>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <th colspan='2'>Inputs</th>
+                    <th colspan='1'>Output</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
                 </tr>
                 <tr>
                     <td>0</td>
@@ -134,8 +142,12 @@
             <table>
                 <caption>NOT</caption>
                 <tr>
-                    <th>A</th>
-                    <th>C</th>
+                    <th colspan='1'>Inputs</th>
+                    <th colspan='1'>Output</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>C</td>
                 </tr>
                 <tr>
                     <td>0</td>
@@ -158,9 +170,13 @@
             <table>
                 <caption>XOR</caption>
                 <tr>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <th colspan='2'>Inputs</th>
+                    <th colspan='1'>Output</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
                 </tr>
                 <tr>
                     <td>0</td>
@@ -187,9 +203,13 @@
             <table>
                 <caption>NAND</caption>
                 <tr>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <th colspan='2'>Inputs</th>
+                    <th colspan='1'>Output</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
                 </tr>
                 <tr>
                     <td>0</td>
@@ -216,9 +236,13 @@
             <table>
                 <caption>NOR</caption>
                 <tr>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <th colspan='2'>Inputs</th>
+                    <th colspan='1'>Output</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
                 </tr>
                 <tr>
                     <td>0</td>
@@ -243,7 +267,7 @@
             </table>
         </p>
 
-        <h2>What next?</h2>
+        <h2>What's Next?</h2>
         <p>
             Now that you've learnt about all of the logic gates that are possible it's time to begin learning about what you can achieve by using these simple building blocks to reach a significantly more complex goals. The next lesson will cover speciality circuits, this means we will be going over the design of the circuits that allow modern computers to add and store numbers. But before that you will once again enter the circuit simulator. There is also another challenge for you to attempt.
         </p>
@@ -259,7 +283,7 @@
                 <li>The key is in the ignition and the door is open</li>
                 <li>The key is not in the ignition and the lights are on</li>
             </ul>
-            The first thing you should do is construct a table with the relevant inputs and outputs and then you should work with that and the specifications of the problem to construct a circuit in the sandbox.
+            the first thing you should do is construct a table with the relevant inputs and outputs and then you should work with that and the specifications of the problem to construct a circuit in the sandbox.
         </p>
     </body>
 </html>
