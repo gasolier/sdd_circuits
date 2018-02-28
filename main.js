@@ -42,6 +42,7 @@ function clear () {
 }
 
 function next_stage () {
+
     if (current_lesson == 10) {
         next_lesson.disabled = true; 
         return;
@@ -61,13 +62,19 @@ function next_stage () {
         
     }
     lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
+    if (current_lesson == 10) {
+        next_lesson.disabled = true; 
+    }
+    else {
+        next_lesson.disabled = false;
+    }
     clear();
 }
 
 function move_block (ev) {
     if (moving == true) {
         block_to_move.style.setProperty('transform', 
-            'translate(' + (ev.pageX - viewer.offsetLeft - 64) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)');
+            'translate(' + (ev.pageX - viewer.offsetLeft - 28) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)');
 
         moving = false;
 
@@ -154,7 +161,7 @@ function clicked_output (ev, output_block) {
     connect_line = true;
 
     global_line_y = ev.pageY - viewer.offsetTop - 32;
-    global_line_x = ev.pageX - viewer.offsetLeft - 32;
+    global_line_x = ev.pageX - viewer.offsetLeft;
 
     create_line(global_line_x, global_line_y, global_line_x, global_line_y);
 
@@ -940,11 +947,11 @@ sandbox.onclick = move_block;
 sandbox.onmousemove = (ev) => {
     if (connect_line) {
         viewer.removeChild(document.getElementById('tester'));
-        create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft - 32, ev.pageY - viewer.offsetTop - 32);
+        create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft, ev.pageY - viewer.offsetTop - 32);
     }
     if (moving) {
         block_to_move.style.setProperty('transform', 
-            'translate(' + (ev.pageX - viewer.offsetLeft - 64) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)');
+            'translate(' + (ev.pageX - viewer.offsetLeft - 28) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)');
     }
 }
 

@@ -1,22 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 ::-webkit-scrollbar { 
     display: none; 
 }
 
 body {
-	font-family: serif;
-	padding: 0% 10%;
+	font-family: 'Open Sans', serif;
+	background-color: #ffffff;
+	color: black;
+	padding: 0% 18%;
+}
+
+h1, h2, h3 {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+h2, h3 {
+	margin-top: 10%;
 }
 
 h1 {
 	text-align: center;
-	font-family: sans-serif;
-}
-
-h2, h3 {
-	font-family: sans-serif;
 }
 
 h3 {
+	margin-top: 7%;
 	margin-left: 5%;
 }
 
@@ -26,6 +35,10 @@ ul {
 
 table {
 	padding: inherit;
+}
+
+p {
+	text-align: left;
 }
 
 .h3p {
