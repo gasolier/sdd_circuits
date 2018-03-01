@@ -981,6 +981,10 @@ next_lesson.onclick = () => {
     next_stage();  
 }
 
+support_email.onclick = () => {
+    window.open('mailto:ochandle@as.edu.au?subject=Support with Circuit Simulator');
+}
+
 sandbox.onclick = move_block;
 
 sandbox.onmousemove = (ev) => {

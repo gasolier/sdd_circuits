@@ -10,9 +10,9 @@
 	font-weight: bold;
 	color: #ffffff;
 	height: 5%;
-	width: 20%;
+	width: 15%;
 	top: 1%;
-	left: 78%;
+	left: 83%;
 }
 
 #next_lesson:active {
@@ -23,6 +23,24 @@
 #next_lesson:disabled {
 	background-color: #aec2ad;
 	border-bottom: 4px solid #aec2ad;
+}
+
+#support_email {
+	position: absolute;
+	background-color: #0cbf77;
+	border: none;
+	border-bottom: 4px solid #0bae66;
+	font-weight: bold;
+	color: #ffffff;
+	height: 5%;
+	width: 15%;
+	top: 1%;
+	left: 67%;
+}
+
+#support_email:active {
+	background-color: #0bae66;
+	border-bottom: 4px solid #0bae66;
 }
 
 .sandbox {
