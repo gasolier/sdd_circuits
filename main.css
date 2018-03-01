@@ -4,17 +4,43 @@
 
 #next_lesson {
 	position: absolute;
-	height: 4%;
-	width: 20%;
-	top: 0.62%;
-	left: 77.7%;
+	background-color: #0cbf77;
+	border: none;
+	border-bottom: 4px solid #0bae66;
+	font-weight: bold;
+	color: #ffffff;
+	height: 5%;
+	width: 15%;
+	top: 1%;
+	left: 83%;
+}
+
+#next_lesson:active {
+	background-color: #0bae66;
+}
+
+#previous_lesson {
+	position: absolute;
+	background-color: #0cbf77;
+	border: none;
+	border-bottom: 4px solid #0bae66;
+	font-weight: bold;
+	color: #ffffff;
+	height: 5%;
+	width: 15%;
+	top: 1%;
+	left: 67%;
+}
+
+#previous_lesson:active {
+	background-color: #0bae66;
 }
 
 .sandbox {
 	position: absolute;
 	left: 0%;
-	top: 5%;
-	height: 95%;
+	top: 7%;
+	height: 93%;
     width: 100%;
     border: none;
     border-top: 3px solid #065085;
@@ -23,8 +49,8 @@
 .learn {
 	position: absolute;
 	left: 0%;
-	top: 5%;
-	height: 95%;
+	top: 7%;
+	height: 93%;
     width: 100%;
     border: none;
     border-top: 3px solid #065085;
@@ -69,11 +95,10 @@ div {
 
 select {
 	position: absolute;
-	height: 4%;
+	height: 5%;
 	width: 20%;
-	top: 0.62%;
-	left: 2.5%;
-}
+	top: 1%;
+	left: 1.5%;
 
 ul {
 	height: 100%;
