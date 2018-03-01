@@ -56,7 +56,7 @@ function clear () {
 
 function next_stage () {
     // if we've reached the last lesson break out of the function and disable the button
-    if (current_lesson == 10) {
+    if (current_lesson == 11) {
         next_lesson.disabled = true; 
         return;
     }
@@ -81,7 +81,7 @@ function next_stage () {
 
     // this handles setting the dropdown box to the right lesson number
     lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
-    if (current_lesson == 10) {
+    if (current_lesson == 11) {
         next_lesson.disabled = true; 
     }
     else {
@@ -968,7 +968,7 @@ lesson_selector.onchange = () => {
         sandbox.style.setProperty('display', 'none');
         learn.style.setProperty('display', 'inline');
     }
-    if (current_lesson == 10) {
+    if (current_lesson == 11) {
         next_lesson.disabled = true; 
     }
     else {

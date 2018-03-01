@@ -1,0 +1,8 @@
+.not {
+	border-top: 2px solid black;
+}
+
+.xor {
+	border: 2px solid black;
+	border-radius: 100%;
+}
