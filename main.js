@@ -1,3 +1,8 @@
+// variables are not documented unless there are special circumstances as they are all in the data dictionary
+// this was also my first time using JavaScript and I've learnt A LOT if I was to do this again or if I refactor 
+// the code at some point in time then I know a lot more tricks, the major issues are to do with violating DRY 
+// and now that I know more about functional programming paradigms I can likely write neater code
+
 let block_array = new Array();
 let moving = false;
 let block_to_move = null;
@@ -6,43 +11,51 @@ let global_line_x = 0;
 let global_line_y = 0;
 let connector_block = null;
 let output_connection = false;
-let current_action = "Nothing";
-let mode = "learn";
 let learn_frame = document.getElementById('learn');
 let current_lesson = 0;
 let sandbox_levels = [1,3,5,7,10];
 
+
+// used to create the div element that connects gates together
 function create_line (x1, y1, x2, y2) {
-    let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); // remove a small constant so as to not block the cursor
+    let length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    // angle is in radians not degrees
     let angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
 
     let line = document.createElement('div');
     line.classList.add('line');
-
     line.style.setProperty('position', 'absolute');
     line.style.setProperty('left', x1 + 'px');
     line.style.setProperty('top', y1 + 'px');
     line.style.setProperty('transform', 'rotate(' + angle + 'deg)');
     line.style.setProperty('width', length + 'px');
 
+    // setting the id allows us to quickly delete and re-create the line whenever the cursor is moved
     line.id = 'tester';
 
     viewer.appendChild(line);
 }
 
 function clear () {
+    // go through every gate and remove it
     for (let i = 0; i < block_array.length; i++){
         viewer.removeChild(document.getElementById(i.toString()));
     }
+
+    // getting the lines was a little more difficult as they aren't stored
+    // strangely we can't use document.getElementsByClass as it returns a live HTML list and that has weird bugs
+    // .line obviously refers to the `line` class
     let line_arr = document.querySelectorAll('.line');
     Array.prototype.forEach.call(line_arr, function(line_) {
         viewer.removeChild(line_);
     });
+
+    // clear the array by setting its length to 0, this probably shouldn't work but it's fast and doesn't mess up references to the object
     block_array.length = 0;
 }
 
 function next_stage () {
-
+    // if we've reached the last lesson break out of the function and disable the button
     if (current_lesson == 10) {
         next_lesson.disabled = true; 
         return;
@@ -51,16 +64,22 @@ function next_stage () {
         next_lesson.disabled = false;
     }
     current_lesson += 1;
+
+    // this is a weird JS thing, ~(statement) returns true for every value but -1
+    // and if an element isn't in an array .indexOf() returns -1, so this works quite well
     if (~sandbox_levels.indexOf(current_lesson)) {
         learn.style.setProperty('display', 'none');
         sandbox.style.setProperty('display', 'inline');
     }
     else {
+        // quite proud of this, using an iframe + files in different folders makes loading lessons on the same page very simple
         learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
         sandbox.style.setProperty('display', 'none');
         learn.style.setProperty('display', 'inline');
         
     }
+
+    // this handles setting the dropdown box to the right lesson number
     lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
     if (current_lesson == 10) {
         next_lesson.disabled = true; 
@@ -73,6 +92,8 @@ function next_stage () {
 
 function move_block (ev) {
     if (moving == true) {
+        // use the CSS transform property to move the gate to the cursor + the default offset due to browser sizes + a small amount due to
+        // position: absolute in the viewer div messing up offsets a little
         block_to_move.style.setProperty('transform', 
             'translate(' + (ev.pageX - viewer.offsetLeft - 28) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)');
 
@@ -83,11 +104,9 @@ function move_block (ev) {
 
         viewer.style.setProperty('cursor', 'default');
 
-        current_action = "Nothing";
-        document.getElementById('action').innerHTML = current_action;
-
         connect_line = false;
 
+        // stop the event from travelling past here, makes sure that if you drag one block the ones below it don't follow
         ev.stopPropagation();
     }
 }
@@ -98,13 +117,11 @@ function clicked_block (ev, block) {
         return;
     }
 
+    // if we aren't moving something already set the block we move to this one
     block.style.setProperty('stroke', 'red');
     moving = true;
     block_to_move = block;
     viewer.style.setProperty('cursor', 'pointer');
-
-    current_action = "Moving element";
-    document.getElementById('action').innerHTML = current_action;
 
     ev.stopPropagation();
 }
@@ -115,8 +132,10 @@ function clicked_switch (ev, block) {
         return;
     }
 
+    // get the block by taking the clicked element's parent's id and using it to search the array for the object
     block = block_array[parseInt(block.parentElement.id)];
     
+    // if the output is true make it false and vice-versa
     block.output = block.output ? false : true;
     block.update_self();
 
@@ -129,9 +148,11 @@ function clicked_input (ev, input_block) {
         return;
     }
     if (output_connection) {
-        output_connector (ev, input_block);
+        output_connector(ev, input_block);
         return;
     }
+
+    // if we aren't connecting one gate to another just turn the input off or on like a switch
     parent_block = input_block.parentElement;
     if (output_connection == false) {
         if (input_block.id == '1') {
@@ -150,13 +171,14 @@ function clicked_output (ev, output_block) {
         move_block(ev);
         return;
     }
+
+    // if we clicked the output and aren't moving start the process of connecting to another gate
+    // this involves changing the global flag and creating the line that is going to be drawn
+    // we also need to set the global variable which handles which gate will provide input to the connected block
     parent_block = output_block.parentElement;
 
     connector_block = block_array[parseInt(parent_block.id)];
     output_connection = true;
-
-    current_action = "Waiting to connect to output...";
-    document.getElementById('action').innerHTML = current_action;
 
     connect_line = true;
 
@@ -173,12 +195,15 @@ function output_connector (ev, output_block) {
         move_block(ev);
         return;
     }
+
     console.log("Connecting input to output...");
     console.log("Attempting to connect to a " + output_block.parentElement.classList[0]);
     if (output_connection) {
+        // get the type of block we're attempting to form a connection with
         type = output_block.parentElement.classList[0];
         
         if (type == 'output-block') {
+            // if we're attempting to connect to an arbitrary output block just set its input_block value to us
             output_block = block_array[parseInt(output_block.parentElement.id)];
             
             output_block.input_block = connector_block;
@@ -186,7 +211,9 @@ function output_connector (ev, output_block) {
 
             connector_block.update_self();
         } else if (type != 'undef') {
+            // if it isn't an arbitrary output we need to know which input we're connecting to
             if (output_block.id == "1") {
+                // if it's 1 just set the block we're connecting to, to refer to us as it's first child
                 output_block = block_array[parseInt(output_block.parentElement.id)];
 
                 output_block.input_1_child = connector_block;
@@ -194,6 +221,7 @@ function output_connector (ev, output_block) {
                 
                 connector_block.update_self();
             } else {
+                // do the same for the second input
                 output_block = block_array[parseInt(output_block.parentElement.id)];
 
                 output_block.input_2_child = connector_block;
@@ -204,21 +232,26 @@ function output_connector (ev, output_block) {
             
         }
 
+        // make sure that the block we're connecting to and the one we're connecting from can no longer be moved
         connector_block.svg_wrapper.onmousedown = function (event) { /* do nothing here */ }
         output_block.svg_wrapper.onmousedown = function (event) { /* do nothing here */ }
 
+        // remove the `tester` id from the line so it is no longer destroyed every mousemove event
         document.getElementById('tester').id = '';
         connect_line = false;
         
+        // reset the connection handlers
         connector_block = null;
         output_connection = false;
-
-        current_action = "Nothing";
-        document.getElementById('action').innerHTML = current_action;
     }
     
     ev.stopPropagation();
 }
+
+
+// all variables here are mentioned in the data dictionary and the other bits are pretty self-explanatory
+// I will, however, go through the update_self() method with the AND gate to explain how it works
+// it's close to the same for every prototype so there isn't much point in repeating it several times
 
 function input_block () {
     console.log("Created Input");
@@ -400,10 +433,9 @@ function and_block () {
     
     viewer.appendChild(this.svg_wrapper);
 
-    this.update_self = (depth=0) => {
-        if (depth < 0) {
-            return;
-        }
+    this.update_self = () => {
+
+        // use this to check whether or not our inputs are true or false
         if (this.input_1_child != null) {
             this.input_1 = this.input_1_child.output;
         }
@@ -411,16 +443,19 @@ function and_block () {
             this.input_2 = this.input_2_child.output;
         }
 
+        // if both are true we output a value of `true` else output a `false`
         if (this.input_1 && this.input_2) {
             this.output = true;
         } else {
             this.output = false;
         }
 
+        // if our inputs/output are true set the SVG elements that represent them to green, else use grey
         this.self_input_1.setAttribute('fill', this.input_1 ? 'green' : 'grey');
         this.self_input_2.setAttribute('fill', this.input_2 ? 'green' : 'grey');
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
+        // for every object that is connected to us, call its update_self() method
         this.connected_children.forEach( function(block) {
             block.update_self(depth+1);
         });
@@ -881,6 +916,8 @@ function not_block () {
     }
 }
 
+// set up the button functions that create our gates, we use promises here not anonymous functions because that's the only way I knew
+// how to do it at the time
 create_and.onclick = () => {
     block_array.push(new and_block());
 }
@@ -917,6 +954,8 @@ clear_screen.onclick = () => {
     clear();
 }
 
+// if the dropdown box changes do the same thing as the next_stage() function, we had to use this instead of re-using that function
+// because of slight differences in how they calculate the current_lesson value
 lesson_selector.onchange = () => {
     let selected_lesson = parseInt(lesson_selector.value) - 1;
     current_lesson = selected_lesson;
@@ -946,17 +985,17 @@ sandbox.onclick = move_block;
 
 sandbox.onmousemove = (ev) => {
     if (connect_line) {
+        // if the mouse moves and we're creating a line delete the old one and draw a new one at the same start and a different end
         viewer.removeChild(document.getElementById('tester'));
         create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft, ev.pageY - viewer.offsetTop - 32);
     }
     if (moving) {
+        // if we're currently moving a block change its transform value to the mouse position
         block_to_move.style.setProperty('transform', 
             'translate(' + (ev.pageX - viewer.offsetLeft - 28) + 'px, ' + (ev.pageY - viewer.offsetTop - 64) + 'px)');
     }
 }
 
+// when we are loaded set all values to the first and load the first lesson
 lesson_selector.value = document.getElementById('s' + (current_lesson + 1)).value;
-document.getElementById('action').innerHTML = current_action;
 learn_frame.setAttribute('src', "lessons/" + current_lesson + "/lesson.html");
-
-document.getElementById('action').innerHTML = current_action;

@@ -10,30 +10,19 @@
 	font-weight: bold;
 	color: #ffffff;
 	height: 5%;
-	width: 15%;
+	width: 20%;
 	top: 1%;
-	left: 83%;
+	left: 78%;
 }
 
 #next_lesson:active {
 	background-color: #0bae66;
-}
-
-#previous_lesson {
-	position: absolute;
-	background-color: #0cbf77;
-	border: none;
 	border-bottom: 4px solid #0bae66;
-	font-weight: bold;
-	color: #ffffff;
-	height: 5%;
-	width: 15%;
-	top: 1%;
-	left: 67%;
 }
 
-#previous_lesson:active {
-	background-color: #0bae66;
+#next_lesson:disabled {
+	background-color: #aec2ad;
+	border-bottom: 4px solid #aec2ad;
 }
 
 .sandbox {
@@ -99,6 +88,7 @@ select {
 	width: 20%;
 	top: 1%;
 	left: 1.5%;
+}
 
 ul {
 	height: 100%;
