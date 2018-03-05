@@ -182,7 +182,7 @@ function clicked_output (ev, output_block) {
 
     connect_line = true;
 
-    global_line_y = ev.pageY - viewer.offsetTop - 32;
+    global_line_y = ev.pageY - viewer.offsetTop - 62;
     global_line_x = ev.pageX - viewer.offsetLeft;
 
     create_line(global_line_x, global_line_y, global_line_x, global_line_y);
@@ -457,7 +457,7 @@ function and_block () {
 
         // for every object that is connected to us, call its update_self() method
         this.connected_children.forEach( function(block) {
-            block.update_self(depth+1);
+            block.update_self();
         });
     }
 }
@@ -529,10 +529,7 @@ function nand_block () {
     
     viewer.appendChild(this.svg_wrapper);
 
-    this.update_self = (depth=0) => {
-        if (depth < 0) {
-            return;
-        }
+    this.update_self = () => {
         if (this.input_1_child != null) {
             this.input_1 = this.input_1_child.output;
         }
@@ -553,7 +550,7 @@ function nand_block () {
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
         this.connected_children.forEach( function(block) {
-            block.update_self(depth+1);
+            block.update_self();
         });
     }
 }
@@ -620,10 +617,7 @@ function or_block () {
     
     viewer.appendChild(this.svg_wrapper);
 
-    this.update_self = (depth=0) => {
-        if (depth < 0) {
-            return;
-        }
+    this.update_self = () => {
         if (this.input_1_child != null) {
             this.input_1 = this.input_1_child.output;
         }
@@ -642,7 +636,7 @@ function or_block () {
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
         this.connected_children.forEach( function(block) {
-            block.update_self(depth+1);
+            block.update_self();
         });
     }
 }
@@ -714,10 +708,7 @@ function nor_block () {
     
     viewer.appendChild(this.svg_wrapper);
 
-    this.update_self = (depth=0) => {
-        if (depth < 0) {
-            return;
-        }
+    this.update_self = () => {
         if (this.input_1_child != null) {
             this.input_1 = this.input_1_child.output;
         }
@@ -738,7 +729,7 @@ function nor_block () {
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
         this.connected_children.forEach( function(block) {
-            block.update_self(depth+1);
+            block.update_self();
         });
     }
 }
@@ -810,10 +801,7 @@ function xor_block () {
     
     viewer.appendChild(this.svg_wrapper);
 
-    this.update_self = (depth=0) => {
-        if (depth < 0) {
-            return;
-        }
+    this.update_self = () => {
         if (this.input_1_child != null) {
             this.input_1 = this.input_1_child.output;
         }
@@ -832,7 +820,7 @@ function xor_block () {
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
         this.connected_children.forEach( function(block) {
-            block.update_self(depth+1);
+            block.update_self();
         });
     }
 }
@@ -893,10 +881,7 @@ function not_block () {
     
     viewer.appendChild(this.svg_wrapper);
 
-    this.update_self = (depth=0) => {
-        if (depth < 0) {
-            return;
-        }
+    this.update_self = () => {
         if (this.input_1_child != null) {
             this.input_1 = this.input_1_child.output;
         }
@@ -911,7 +896,7 @@ function not_block () {
         this.self_output.setAttribute('fill', this.output ? 'green' : 'grey');
 
         this.connected_children.forEach( function(block) {
-            block.update_self(depth+1);
+            block.update_self();
         });
     }
 }
@@ -991,7 +976,7 @@ sandbox.onmousemove = (ev) => {
     if (connect_line) {
         // if the mouse moves and we're creating a line delete the old one and draw a new one at the same start and a different end
         viewer.removeChild(document.getElementById('tester'));
-        create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft, ev.pageY - viewer.offsetTop - 32);
+        create_line(global_line_x, global_line_y, ev.pageX - viewer.offsetLeft, ev.pageY - viewer.offsetTop - 62);
     }
     if (moving) {
         // if we're currently moving a block change its transform value to the mouse position
